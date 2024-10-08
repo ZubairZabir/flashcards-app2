@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Flashcard from "./components/Flashcard";
 
+// Original flashcards data
 const flashcardsData = [
   { front: "What is 2 + 2?", back: "4" },
   { front: "Capital of France?", back: "Paris" },
@@ -9,10 +10,7 @@ const flashcardsData = [
   { front: "What is the boiling point of water in Celsius?", back: "100" },
   { front: "Who painted the Mona Lisa?", back: "Leonardo da Vinci" },
   { front: "What is the chemical symbol for gold?", back: "Au" },
-  {
-    front: "What is the tallest mountain in the world?",
-    back: "Mount Everest",
-  },
+  { front: "What is the tallest mountain in the world?", back: "Mount Everest" },
   { front: "What is the capital of Japan?", back: "Tokyo" },
   { front: "Which element has the atomic number 1?", back: "Hydrogen" },
   { front: "Who is the author of '1984'?", back: "George Orwell" },
@@ -33,6 +31,8 @@ const flashcardsData = [
 ];
 
 const App = () => {
+  // State to hold the list of cards and the current card index
+  const [cards, setCards] = useState(flashcardsData);
   const [currentCard, setCurrentCard] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [userAnswer, setUserAnswer] = useState("");
@@ -40,15 +40,18 @@ const App = () => {
   const [streak, setStreak] = useState(0);
   const [longestStreak, setLongestStreak] = useState(0);
 
+  // Function to flip the card
   const handleFlip = () => setIsFlipped(!isFlipped);
 
+  // Go to the next card
   const nextCard = () => {
-    if (currentCard < flashcardsData.length - 1) {
+    if (currentCard < cards.length - 1) {
       setCurrentCard(currentCard + 1);
       setIsFlipped(false);
     }
   };
 
+  // Go to the previous card
   const previousCard = () => {
     if (currentCard > 0) {
       setCurrentCard(currentCard - 1);
@@ -56,17 +59,17 @@ const App = () => {
     }
   };
 
+  // Shuffle the cards
   const shuffleCards = () => {
-    const shuffled = [...flashcardsData].sort(() => Math.random() - 0.5);
-    setCurrentCard(0);
-    setIsFlipped(false);
+    const shuffledCards = [...cards].sort(() => Math.random() - 0.5);
+    setCards(shuffledCards);
+    setCurrentCard(0); // Reset to the first card in the shuffled deck
+    setIsFlipped(false); // Make sure the card is not flipped after shuffling
   };
 
+  // Check the user's answer
   const checkAnswer = () => {
-    if (
-      userAnswer.toLowerCase() ===
-      flashcardsData[currentCard].back.toLowerCase()
-    ) {
+    if (userAnswer.toLowerCase() === cards[currentCard].back.toLowerCase()) {
       setFeedback("Correct!");
       setStreak(streak + 1);
       if (streak + 1 > longestStreak) setLongestStreak(streak + 1);
@@ -79,8 +82,8 @@ const App = () => {
   return (
     <div className="app">
       <Flashcard
-        front={flashcardsData[currentCard].front}
-        back={flashcardsData[currentCard].back}
+        front={cards[currentCard].front}
+        back={cards[currentCard].back}
         onFlip={handleFlip}
         isFlipped={isFlipped}
       />
@@ -100,7 +103,7 @@ const App = () => {
         </button>
         <button
           onClick={nextCard}
-          disabled={currentCard === flashcardsData.length - 1}
+          disabled={currentCard === cards.length - 1}
         >
           Next
         </button>
