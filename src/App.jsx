@@ -26,6 +26,20 @@ const App = () => {
     }
   };
 
+  const [userAnswer, setUserAnswer] = useState("");
+  const [feedback, setFeedback] = useState("");
+
+  const checkAnswer = () => {
+    if (
+      userAnswer.toLowerCase() ===
+      flashcardsData[currentCard].back.toLowerCase()
+    ) {
+      setFeedback("Correct!");
+    } else {
+      setFeedback("Incorrect");
+    }
+  };
+
   return (
     <div className="app">
       <Flashcard
@@ -34,6 +48,14 @@ const App = () => {
         onFlip={handleFlip}
         isFlipped={isFlipped}
       />
+      <input
+        type="text"
+        value={userAnswer}
+        onChange={(e) => setUserAnswer(e.target.value)}
+        placeholder="Enter your answer"
+      />
+      <button onClick={checkAnswer}>Submit</button>
+      <p>{feedback}</p>
       <div className="navigation">
         <button onClick={previousCard} disabled={currentCard === 0}>
           Back
