@@ -39,7 +39,7 @@ The following optional features have been implemented:
 
 Here's a walkthrough of the implemented required and optional features:
 
-![Walkthrough GIF](https://submissions.us-east-1.linodeobjects.com/web102/X1PeTnvD.gif)
+![Walkthrough GIF](https://submissions.us-east-1.linodeobjects.com/web102/MxOmGrlP.gif)
 
 GIF created with LICEcap
 
