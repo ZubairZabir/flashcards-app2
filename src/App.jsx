@@ -9,6 +9,10 @@ const flashcardsData = [
 const App = () => {
   const [currentCard, setCurrentCard] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
+  const [userAnswer, setUserAnswer] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const [streak, setStreak] = useState(0);
+  const [longestStreak, setLongestStreak] = useState(0);
 
   const handleFlip = () => setIsFlipped(!isFlipped);
 
@@ -26,8 +30,11 @@ const App = () => {
     }
   };
 
-  const [userAnswer, setUserAnswer] = useState("");
-  const [feedback, setFeedback] = useState("");
+  const shuffleCards = () => {
+    const shuffled = [...flashcardsData].sort(() => Math.random() - 0.5);
+    setCurrentCard(0);
+    setIsFlipped(false);
+  };
 
   const checkAnswer = () => {
     if (
@@ -35,8 +42,11 @@ const App = () => {
       flashcardsData[currentCard].back.toLowerCase()
     ) {
       setFeedback("Correct!");
+      setStreak(streak + 1);
+      if (streak + 1 > longestStreak) setLongestStreak(streak + 1);
     } else {
       setFeedback("Incorrect");
+      setStreak(0);
     }
   };
 
@@ -56,6 +66,8 @@ const App = () => {
       />
       <button onClick={checkAnswer}>Submit</button>
       <p>{feedback}</p>
+      <p>Streak: {streak}</p>
+      <p>Longest Streak: {longestStreak}</p>
       <div className="navigation">
         <button onClick={previousCard} disabled={currentCard === 0}>
           Back
@@ -67,6 +79,7 @@ const App = () => {
           Next
         </button>
       </div>
+      <button onClick={shuffleCards}>Shuffle Cards</button>
     </div>
   );
 };
