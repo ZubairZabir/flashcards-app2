@@ -12,3 +12,20 @@
 .flipped {
   background-color: lightblue;
 }
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+  margin: 20px auto;
+}
+
+button {
+  padding: 10px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: lightgray;
+  cursor: not-allowed;
+}

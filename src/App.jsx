@@ -12,6 +12,20 @@ const App = () => {
 
   const handleFlip = () => setIsFlipped(!isFlipped);
 
+  const nextCard = () => {
+    if (currentCard < flashcardsData.length - 1) {
+      setCurrentCard(currentCard + 1);
+      setIsFlipped(false);
+    }
+  };
+
+  const previousCard = () => {
+    if (currentCard > 0) {
+      setCurrentCard(currentCard - 1);
+      setIsFlipped(false);
+    }
+  };
+
   return (
     <div className="app">
       <Flashcard
@@ -20,6 +34,17 @@ const App = () => {
         onFlip={handleFlip}
         isFlipped={isFlipped}
       />
+      <div className="navigation">
+        <button onClick={previousCard} disabled={currentCard === 0}>
+          Back
+        </button>
+        <button
+          onClick={nextCard}
+          disabled={currentCard === flashcardsData.length - 1}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };
